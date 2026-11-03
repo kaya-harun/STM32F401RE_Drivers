@@ -71,7 +71,7 @@ typedef enum
 {
 	GPIO_PUPD_NONE,
 	GPIO_PUPD_PU,
-	GPIO_PUDP_PD
+	GPIO_PUPD_PD
 }GPIO_PuPd;
 
 /**
