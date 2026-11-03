@@ -93,3 +93,8 @@ void GPIO_Toggle(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber)
 {
 	GPIOX->ODR ^= 0x1U << pinNumber;
 }
+
+void GPIO_IRQ_Handle(GPIO_Pin_Number pinNumber)
+{
+	EXTI->PR |= 0x1U << pinNumber;
+}

@@ -170,4 +170,11 @@ GPIO_Pin_State GPIO_Read(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber);
  */
 void GPIO_Toggle(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber);
 
+/**
+ * @brief GPIO pin interrupt handle API.
+ *
+ * @param pinNumber		Pin number to be used
+ */
+void GPIO_IRQ_Handle(GPIO_Pin_Number pinNumber);
+
 #endif /* INC_STM32F401RE_GPIO_H_ */
