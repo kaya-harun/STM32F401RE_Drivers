@@ -115,16 +115,16 @@ struct NVIC_RegMap
  * @defgroup Peripheral_Pointers Peripheral pointer macros
  * @{
  */
-#define RCC		((RCC_RegMap_t*)RCC_BASEADDR)
-#define GPIOA	((GPIO_RegMap_t*)GPIOA_BASEADDR)
-#define GPIOB	((GPIO_RegMap_t*)GPIOB_BASEADDR)
-#define GPIOC	((GPIO_RegMap_t*)GPIOC_BASEADDR)
-#define GPIOD	((GPIO_RegMap_t*)GPIOD_BASEADDR)
-#define GPIOE	((GPIO_RegMap_t*)GPIOE_BASEADDR)
-#define GPIOH	((GPIO_RegMap_t*)GPIOH_BASEADDR)
-#define EXTI	((EXTI_RegMap_t*)EXTI_BASEADDR)
-#define NVIC	((NVIC_RegMap_t*)NVIC_BASEADDR)
-#define SYSCFG 	((SYSCFG_RegMap_t*)SYSCFG_BASEADDR)
+#define RCC		((RCC_RegMap*)0x40023800U)
+#define GPIOA	((GPIO_RegMap*)0x40020000U)
+#define GPIOB	((GPIO_RegMap*)0x40020400U)
+#define GPIOC	((GPIO_RegMap*)0x40020800U)
+#define GPIOD	((GPIO_RegMap*)0x40020C00U)
+#define GPIOE	((GPIO_RegMap*)0x40021000U)
+#define GPIOH	((GPIO_RegMap*)0x40021C00U)
+#define EXTI	((EXTI_RegMap*)0x40013C00U)
+#define NVIC	((NVIC_RegMap*)0xE000E100U)
+#define SYSCFG 	((SYSCFG_RegMap*)0x40013800U)
 /**
  * @}
  */
