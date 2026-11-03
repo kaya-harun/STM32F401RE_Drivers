@@ -143,6 +143,15 @@ struct GPIO_Conf
 void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config);
 
 /**
+ * @brief GPIO pin deinitialization API.
+ *
+ * @param GPIOX 		Pointer to the port to which the pin belongs
+ * @param pinNumber 	Pin number to be deinitialized
+ * @param IRQNumber		IRQ number of the pin
+ */
+void GPIO_Deinit(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber, GPIO_IRQ_Number IRQNumber);
+
+/**
  * @brief GPIO pin write API.
  *
  * @param GPIOX 		Pointer to the port to which the pin belongs

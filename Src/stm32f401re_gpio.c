@@ -26,13 +26,6 @@ void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config)
 	IPRBit = config->IRQNumber % 4; //Corresponding bit
 	NVIC->IPR[IPRX] &= ~(0xFFU << (8 * IPRBit)); //Clear field
 
-	ISERX = config->IRQNumber / 32; //ICER number
-	ISERBit = config->IRQNumber % 32; //Corresponding bit
-	NVIC->ICER[ISERX] |= 0x1U << ISERBit; //Disable interrupt
-
-	EXTI->IMR &= ~(0x1U << config->pinNumber); //Mask line
-
-
 	if(config->mode <= GPIO_MODE_AF)
 	{
 		GPIOX->MODER |= config->mode << (2 * config->pinNumber); //Set mode
@@ -70,10 +63,129 @@ void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config)
 
 		NVIC->IPR[IPRX] |= config->priority << ((8 * IPRBit) + 4); //Set priority
 
+		ISERX = config->IRQNumber / 32; //ICER number
+		ISERBit = config->IRQNumber % 32; //Corresponding bit
 		NVIC->ISER[ISERX] |= 0x1U << ISERBit; //Enable interrupt
 
 		EXTI->IMR |= 0x1U << config->pinNumber; //Unmask line
 	}
+}
+
+void GPIO_Deinit(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber, GPIO_IRQ_Number IRQNumber)
+{
+	uint8_t aFRX, aFRBit, IPRX, IPRBit, ISERX, ISERBit;
+	//Reset MODER
+	if(GPIOX == GPIOA)
+	{
+		switch(pinNumber)
+		{
+		case GPIO_PIN_15:
+			break;
+		case GPIO_PIN_14:
+			break;
+		case GPIO_PIN_13:
+			break;
+		default:
+			GPIOX->MODER &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+			break;
+		};
+	}
+	else if(GPIOX == GPIOB)
+	{
+		switch(pinNumber)
+		{
+		case GPIO_PIN_4:
+			break;
+		case GPIO_PIN_3:
+			break;
+		default:
+			GPIOX->MODER &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+			break;
+		};
+	}
+	else
+	{
+		GPIOX->MODER &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+	}
+
+
+	//Reset OTYPER
+	GPIOX->OTYPER &= ~(0x1U << pinNumber);
+
+	//Reset PUPDR
+	if(GPIOX == GPIOA)
+	{
+		switch(pinNumber)
+		{
+		case GPIO_PIN_15:
+			break;
+		case GPIO_PIN_14:
+			break;
+		case GPIO_PIN_13:
+			break;
+		default:
+			GPIOX->PUPDR &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+			break;
+		};
+	}
+	else if(GPIOX == GPIOB)
+	{
+		switch(pinNumber)
+		{
+		case GPIO_PIN_4:
+			break;
+		default:
+			GPIOX->PUPDR &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+			break;
+		};
+	}
+	else
+	{
+		GPIOX->PUPDR &= ~(((0x1U << 2) - 1) << (2 * pinNumber));
+	}
+
+	//Clear AFR
+	aFRX = pinNumber / 8; //Decide AFRH or AFRL
+	aFRBit = pinNumber % 8; //Corresponding bit
+	GPIOX->AFR[aFRX] &= ~(0xFU << (4 * aFRBit)); //Clear field
+
+	//Clear RTSR and FTSR
+	EXTI->RTSR &= ~(0x1U << pinNumber); //Clear field
+	EXTI->FTSR &= ~(0x1U << pinNumber); //Clear field
+
+	//Clear IPR
+	IPRX = IRQNumber / 4; //IPR number
+	IPRBit = IRQNumber % 4; //Corresponding bit
+	NVIC->IPR[IPRX] &= ~(0xFFU << (8 * IPRBit)); //Clear field
+
+	//Disable interrupt
+	switch(IRQNumber)
+	{
+	case GPIO_IRQ_EXTI9_5:
+		if(!(EXTI->IMR & (((0x1U << 5) - 1) << 5)))
+		{
+			ISERX = IRQNumber / 32; //ICER number
+			ISERBit = IRQNumber % 32; //Corresponding bit
+			NVIC->ICER[ISERX] |= 0x1U << ISERBit; //Disable interrupt
+		}
+		break;
+	case GPIO_IRQ_EXTI15_10:
+		if(!(EXTI->IMR & (((0x1U << 6) - 1) << 10)))
+		{
+			ISERX = IRQNumber / 32; //ICER number
+			ISERBit = IRQNumber % 32; //Corresponding bit
+			NVIC->ICER[ISERX] |= 0x1U << ISERBit; //Disable interrupt
+		}
+		break;
+	default:
+		ISERX = IRQNumber / 32; //ICER number
+		ISERBit = IRQNumber % 32; //Corresponding bit
+		NVIC->ICER[ISERX] |= 0x1U << ISERBit; //Disable interrupt
+		break;
+	};
+
+	//Mask line
+	EXTI->IMR &= ~(0x1U << pinNumber); //Mask line
 }
 
 void GPIO_Write(GPIO_RegMap *GPIOX, GPIO_Pin_State state, GPIO_Pin_Number pinNumber)
