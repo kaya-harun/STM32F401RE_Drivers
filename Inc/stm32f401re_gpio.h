@@ -142,4 +142,32 @@ struct GPIO_Conf
  */
 void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config);
 
+/**
+ * @brief GPIO pin write API.
+ *
+ * @param GPIOX 		Pointer to the port to which the pin belongs
+ * @param state 		State to be given
+ * @param pinNumber 	Pin number to be written
+ */
+void GPIO_Write(GPIO_RegMap *GPIOX, GPIO_Pin_State state, GPIO_Pin_Number pinNumber);
+
+/**
+ * @brief GPIO pin read API.
+ *
+ * @param GPIOX 		Pointer to the port to which the pin belongs
+ * @param pinNumber		Pin number to be read
+ *
+ * @retval GPIO_Pin_Low 	(0x0U)		Pin is in low state
+ * @retval GPIO_Pin_High 	(0x1U)		Pin is in high state
+ */
+GPIO_Pin_State GPIO_Read(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber);
+
+/**
+ * @brief GPIO pin toggle API.
+ *
+ * @param GPIOX 		Pointer to the port to which the pin belongs
+ * @param pinNumber		Pin number to be toggled
+ */
+void GPIO_Toggle(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber);
+
 #endif /* INC_STM32F401RE_GPIO_H_ */

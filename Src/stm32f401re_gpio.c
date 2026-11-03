@@ -75,3 +75,21 @@ void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config)
 		EXTI->IMR |= 0x1U << config->pinNumber; //Unmask line
 	}
 }
+
+void GPIO_Write(GPIO_RegMap *GPIOX, GPIO_Pin_State state, GPIO_Pin_Number pinNumber)
+{
+	if(state)
+		GPIOX->BSRR |= 0x1U << pinNumber;
+	else
+		GPIOX->BSRR |= 0x1U << (pinNumber + 16);
+}
+
+GPIO_Pin_State GPIO_Read(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber)
+{
+	return ((GPIOX->IDR >> pinNumber) & 0x1U);
+}
+
+void GPIO_Toggle(GPIO_RegMap *GPIOX, GPIO_Pin_Number pinNumber)
+{
+	GPIOX->ODR ^= 0x1U << pinNumber;
+}
