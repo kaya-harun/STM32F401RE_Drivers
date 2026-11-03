@@ -131,7 +131,15 @@ struct GPIO_Conf
 	GPIO_PuPd puPd;				/**< GPIO pin pull-up/pull-down */
 	GPIO_AF aF;					/**< GPIO pin alternate function */
 	GPIO_IRQ_Number IRQNumber;	/**< GPIO pin IRQ number */
-	GPIO_Priority priority;		/**< GPIO pin priority */
+	GPIO_Priority priority;		/**< GPIO pin 4-bit priority*/
 };
+
+/**
+ * @brief GPIO pin initialization API.
+ *
+ * @param GPIOX 		Pointer to the port to which the pin belongs
+ * @param config 		Pointer to the pin configuration structure
+ */
+void GPIO_Init(GPIO_RegMap *GPIOX, GPIO_Conf *config);
 
 #endif /* INC_STM32F401RE_GPIO_H_ */
