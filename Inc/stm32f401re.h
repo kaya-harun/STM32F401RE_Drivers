@@ -8,6 +8,8 @@
 #ifndef INC_STM32F401RE_H_
 #define INC_STM32F401RE_H_
 
+#include <stdint.h>
+
 /**
  * @brief RCC register map structure.
  */
@@ -161,5 +163,7 @@ struct NVIC_RegMap
 								 x == GPIOD ? 0x3U : \
 								 x == GPIOE ? 0x4U : \
 								 x == GPIOH ? 0x5U : 0x0FFU)
+
+#include "stm32f401re_gpio.h"
 
 #endif /* INC_STM32F401RE_H_ */
