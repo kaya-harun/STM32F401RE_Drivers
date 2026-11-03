@@ -122,8 +122,8 @@ typedef enum
 /**
  * @brief GPIO pin configuration structure.
  */
-typedef struct GPIO_Conf_t GPIO_Conf_t;
-struct GPIO_Conf_t
+typedef struct GPIO_Conf GPIO_Conf;
+struct GPIO_Conf
 {
 	GPIO_Pin_Number pinNumber;	/**< GPIO pin number */
 	GPIO_Mode mode;				/**< GPIO pin mode */
