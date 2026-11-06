@@ -112,6 +112,25 @@ struct NVIC_RegMap
 };
 
 /**
+ * @brief I2C register map structure.
+ */
+typedef struct I2C_RegMap I2C_RegMap;
+struct I2C_RegMap
+{
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t OAR1;
+	volatile uint32_t OAR2;
+	volatile uint32_t DR;
+	volatile uint32_t SR1;
+	volatile uint32_t SR2;
+	volatile uint32_t CCR;
+	volatile uint32_t TRISE;
+	volatile uint32_t FLTR;
+
+};
+
+/**
  * @defgroup Peripheral_Pointers Peripheral pointer macros
  * @{
  */
@@ -125,6 +144,9 @@ struct NVIC_RegMap
 #define EXTI	((EXTI_RegMap*)0x40013C00U)
 #define NVIC	((NVIC_RegMap*)0xE000E100U)
 #define SYSCFG 	((SYSCFG_RegMap*)0x40013800U)
+#define I2C1	((I2C_RegMap_t*)0x40005400U)
+#define I2C2	((I2C_RegMap_t*)0x40005800U)
+#define I2C3	((I2C_RegMap_t*)0x40005C00U)
 /**
  * @}
  */
@@ -140,6 +162,9 @@ struct NVIC_RegMap
 #define GPIOE_CLK_EN()	(RCC->AHB1ENR |= 0x1U << 4)
 #define GPIOH_CLK_EN()	(RCC->AHB1ENR |= 0x1U << 7)
 #define SYSCFG_CLK_EN()	(RCC->APB2ENR |= 0x1U << 14)
+#define I2C1_CLK_EN()	(RCC->APB1ENR |= 0x1U << 21)
+#define I2C2_CLK_EN()	(RCC->APB1ENR |= 0x1U << 22)
+#define I2C3_CLK_EN()	(RCC->APB1ENR |= 0x1U << 23)
 /**
  * @}
  */
@@ -165,5 +190,6 @@ struct NVIC_RegMap
 								 x == GPIOH ? 0x5U : 0x0FFU)
 
 #include "stm32f401re_gpio.h"
+#include "stm32f401re_i2c.h"
 
 #endif /* INC_STM32F401RE_H_ */
