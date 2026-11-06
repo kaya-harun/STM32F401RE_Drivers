@@ -144,9 +144,9 @@ struct I2C_RegMap
 #define EXTI	((EXTI_RegMap*)0x40013C00U)
 #define NVIC	((NVIC_RegMap*)0xE000E100U)
 #define SYSCFG 	((SYSCFG_RegMap*)0x40013800U)
-#define I2C1	((I2C_RegMap_t*)0x40005400U)
-#define I2C2	((I2C_RegMap_t*)0x40005800U)
-#define I2C3	((I2C_RegMap_t*)0x40005C00U)
+#define I2C1	((I2C_RegMap*)0x40005400U)
+#define I2C2	((I2C_RegMap*)0x40005800U)
+#define I2C3	((I2C_RegMap*)0x40005C00U)
 /**
  * @}
  */
