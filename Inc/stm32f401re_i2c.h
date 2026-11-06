@@ -34,7 +34,7 @@ struct I2C_Conf
 typedef struct I2C_Handle I2C_Handle;
 struct I2C_Handle
 {
-	I2C_RegMap I2CX;		/**< I2C peripheral pointer */
+	I2C_RegMap *I2CX;		/**< I2C peripheral pointer */
 	I2C_Conf *config;		/**< I2C configuration structure pointer */
 	uint8_t trgAddr;		/**< I2C target address */
 	uint8_t *dataPtr;		/**< DO NOT CONFIGURE */
