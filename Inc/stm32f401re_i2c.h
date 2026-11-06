@@ -42,4 +42,11 @@ struct I2C_Handle
 	I2C_State state;		/**< DO NOT CONFIGURE */
 };
 
+/**
+ * @brief I2C peripheral initialization API.
+ *
+ * @param handle 		Handle pointer to the I2C peripheral to be used
+ */
+void I2C_Init(I2C_Handle *handle);
+
 #endif /* INC_STM32F401RE_I2C_H_ */
