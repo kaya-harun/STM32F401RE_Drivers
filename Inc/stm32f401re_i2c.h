@@ -49,4 +49,10 @@ struct I2C_Handle
  */
 void I2C_Init(I2C_Handle *handle);
 
+/**
+ * @brief I2C polling transfer API.
+ *
+ * @param handle 		Handle pointer to the I2C peripheral to be used
+ */
+void I2C_Transfer_Pol(I2C_Handle *handle, uint8_t *dataPtr, uint32_t dataLength, uint8_t trgAddr);
 #endif /* INC_STM32F401RE_I2C_H_ */
