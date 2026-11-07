@@ -92,4 +92,11 @@ struct UART_Handle
 	uint32_t dataLength;
 	UART_State state;
 };
+
+/**
+ * @brief UART peripheral initialization API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ */
+void UART_Init(UART_Handle *handle);
 #endif /* INC_STM32F401RE_UART_H_ */
