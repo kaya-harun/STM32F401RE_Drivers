@@ -99,4 +99,14 @@ struct UART_Handle
  * @param handle 		Handle pointer to the UART peripheral to be used
  */
 void UART_Init(UART_Handle *handle);
+
+/**
+ * @brief UART peripheral polling transfer API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ * @param dataPtr		Pointer to the data to be transmitted.
+ * @param dataLength	Length of the data to be transmitted.
+ */
+void UART_Transfer_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength);
+
 #endif /* INC_STM32F401RE_UART_H_ */

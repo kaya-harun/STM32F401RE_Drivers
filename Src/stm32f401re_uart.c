@@ -32,3 +32,25 @@ void UART_Init(UART_Handle *handle)
 	handle->UARTX->BRR &= ~((0x1U << 16) - 1); //Clear field
 	handle->UARTX->BRR |= (mantissa << 4) | (fraction); //Set baud rate
 }
+
+void UART_Transfer_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength)
+{
+	handle->dataPtr = dataPtr;
+	handle->dataLength = dataLength;
+
+	handle->UARTX->CR1 |= 0x1U << 13; //Enable UART
+	handle->UARTX->CR1 |= 0x1U << 3; //Send idle
+
+	while(handle->dataLength > 0)
+	{
+		while(!((handle->UARTX->SR >> 7) & 0x1U)); //Wait for TxE
+		handle->UARTX->DR = *(handle->dataPtr); //Send the data
+		(handle->dataPtr)++;
+		(handle->dataLength)--;
+	}
+
+	while(!((handle->UARTX->SR >> 6) & 0x1U)); //Wait for TC
+
+	handle->UARTX->CR1 &= ~(0x1U << 3); //Close TE
+	handle->UARTX->CR1 &= ~(0x1U << 13); //Disable UART
+}
