@@ -131,6 +131,21 @@ struct I2C_RegMap
 };
 
 /**
+ * @brief UART register map structure.
+ */
+typedef struct UART_RegMap UART_RegMap;
+struct UART_RegMap
+{
+	volatile uint32_t SR;
+	volatile uint32_t DR;
+	volatile uint32_t BRR;
+	volatile uint32_t CR1;
+	volatile uint32_t CR2;
+	volatile uint32_t CR3;
+	volatile uint32_t GTPR;
+};
+
+/**
  * @defgroup Peripheral_Pointers Peripheral pointer macros
  * @{
  */
@@ -147,6 +162,9 @@ struct I2C_RegMap
 #define I2C1	((I2C_RegMap*)0x40005400U)
 #define I2C2	((I2C_RegMap*)0x40005800U)
 #define I2C3	((I2C_RegMap*)0x40005C00U)
+#define UART1	((UART_RegMap*)0x40011000U)
+#define UART2	((UART_RegMap*)0x40004400u)
+#define UART6	((UART_RegMap*)0x40011400U)
 /**
  * @}
  */
@@ -165,6 +183,9 @@ struct I2C_RegMap
 #define I2C1_CLK_EN()	(RCC->APB1ENR |= 0x1U << 21)
 #define I2C2_CLK_EN()	(RCC->APB1ENR |= 0x1U << 22)
 #define I2C3_CLK_EN()	(RCC->APB1ENR |= 0x1U << 23)
+#define UART1_CLK_EN()	(RCC->APB2ENR |= 0x1U << 4)
+#define UART2_CLK_EN()	(RCC->APB1ENR |= 0x1U << 17)
+#define UART6_CLK_EN()	(RCC->APB2ENR |= 0x1U << 5)
 /**
  * @}
  */
@@ -191,5 +212,6 @@ struct I2C_RegMap
 
 #include "stm32f401re_gpio.h"
 #include "stm32f401re_i2c.h"
+#include "stm32f401re_uart.h"
 
 #endif /* INC_STM32F401RE_H_ */
