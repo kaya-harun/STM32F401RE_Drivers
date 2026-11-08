@@ -109,4 +109,13 @@ void UART_Init(UART_Handle *handle);
  */
 void UART_Transfer_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength);
 
+/**
+ * @brief UART peripheral polling receive API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ * @param dataPtr		Pointer to the data to be received.
+ * @param dataLength	Length of the data to be received.
+ */
+void UART_Receive_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength);
+
 #endif /* INC_STM32F401RE_UART_H_ */

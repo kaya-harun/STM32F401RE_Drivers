@@ -54,3 +54,23 @@ void UART_Transfer_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLengt
 	handle->UARTX->CR1 &= ~(0x1U << 3); //Close TE
 	handle->UARTX->CR1 &= ~(0x1U << 13); //Disable UART
 }
+
+void UART_Receive_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength)
+{
+	handle->dataPtr = dataPtr;
+	handle->dataLength = dataLength;
+
+	handle->UARTX->CR1 |= 0x1U << 13; //Enable UART
+	handle->UARTX->CR1 |= 0x1U << 2; //Enable receiving
+
+	while(handle->dataLength > 0)
+	{
+		while(!((handle->UARTX->SR >> 5) & 0x1U)); //Wait for RxE
+		*(handle->dataPtr) = handle->UARTX->DR; //Read data
+		(handle->dataPtr)++;
+		(handle->dataLength)--;
+	}
+
+	handle->UARTX->CR1 &= ~(0x1U << 2); //Disable receiving
+	handle->UARTX->CR1 &= ~(0x1U << 13); //Disable UART
+}
