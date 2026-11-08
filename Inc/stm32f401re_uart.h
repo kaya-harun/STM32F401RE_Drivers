@@ -11,6 +11,15 @@
 #include "stm32f401re.h"
 
 /**
+ * @defgroup I2C_Typedefs I2C typedefs
+ *@{
+ */
+typedef uint32_t UART_Priority;
+/**
+ * @}
+ */
+
+/**
  * @brief UART peripheral states.
  */
 typedef enum
@@ -78,6 +87,7 @@ struct UART_Conf
 	UART_Over over;
 	UART_OneBit oneBit;
 	UART_BaudRate baudRate;
+	UART_Priority priority;
 };
 
 /**
@@ -88,10 +98,23 @@ struct UART_Handle
 {
 	UART_RegMap *UARTX;
 	UART_Conf *config;
-	uint8_t *dataPtr;
-	uint32_t dataLength;
-	UART_State state;
+	uint8_t *txDataPtr;
+	uint32_t txDataLength;
+	uint8_t *rxDataPtr;
+	uint32_t rxDataLength;
+	UART_State txState;
+	UART_State rxState;
 };
+
+/**
+ * @brief UART peripheral IRQ numbers.
+ */
+typedef enum
+{
+	UART_IRQ_UART1 = 0x25,
+	UART_IRQ_UART2 = 0x26,
+	UART_IRQ_UART6 = 0x47
+}UART_IRQ_Number;
 
 /**
  * @brief UART peripheral initialization API.
@@ -117,5 +140,31 @@ void UART_Transfer_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLengt
  * @param dataLength	Length of the data to be received.
  */
 void UART_Receive_Pol(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength);
+
+/**
+ * @brief UART peripheral interrupt transfer API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ * @param dataPtr		Pointer to the data to be transmitted.
+ * @param dataLength	Length of the data to be transmitted.
+ */
+UART_State UART_Start_Transfer_It(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength, UART_IRQ_Number IRQNumber);
+
+/**
+ * @brief UART peripheral interrupt receive API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ * @param dataPtr		Pointer to the data to be received.
+ * @param dataLength	Length of the data to be received.
+ */
+UART_State UART_Start_Receive_It(UART_Handle *handle, uint8_t *dataPtr, uint32_t dataLength, UART_IRQ_Number IRQNumber);
+
+/**
+ * @brief UART peripheral interrupt handle API.
+ *
+ * @param handle 		Handle pointer to the UART peripheral to be used
+ */
+void UART_IRQ_Handle(UART_Handle *handle, UART_IRQ_Number IRQNumber);
+
 
 #endif /* INC_STM32F401RE_UART_H_ */
