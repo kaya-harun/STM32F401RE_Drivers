@@ -213,5 +213,6 @@ struct UART_RegMap
 #include "stm32f401re_gpio.h"
 #include "stm32f401re_i2c.h"
 #include "stm32f401re_uart.h"
+#include "stm32f401re_ll_rcc.h"
 
 #endif /* INC_STM32F401RE_H_ */
